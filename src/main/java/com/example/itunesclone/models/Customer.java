@@ -1,29 +1,31 @@
 package com.example.itunesclone.models;
 
 public class Customer {
-    private String id;
+    private String customerId;
     private String firstName;
     private String lastName;
     private String country;
     private String postalCode;
-    private String phoneNbr;
+    private String phoneNumber;
+    private String email;
 
-    public Customer(String id, String firstName, String lastName, String country, String postalCode, String phoneNbr) {
-        this.id = id;
+    public Customer(String customerId, String firstName, String lastName, String country, String postalCode, String phoneNumber, String email) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
         this.postalCode = postalCode;
-        this.phoneNbr = phoneNbr;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
     }
 
 
-    public String getId() {
-        return id;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -58,11 +60,19 @@ public class Customer {
         this.postalCode = postalCode;
     }
 
-    public String getPhoneNbr() {
-        return phoneNbr;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNbr(String phoneNbr) {
-        this.phoneNbr = phoneNbr;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

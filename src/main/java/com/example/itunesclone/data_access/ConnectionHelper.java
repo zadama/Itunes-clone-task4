@@ -6,11 +6,12 @@ import java.sql.SQLException;
 
 public class ConnectionHelper {
 
-    private String url;
+    /*Setting up a connection object*/
+    private String URL;
     private static ConnectionHelper instance;
 
     private ConnectionHelper() {
-        url = "jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
+        URL = "jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
     }
 
     public static Connection getConnection() throws SQLException {
@@ -20,7 +21,7 @@ public class ConnectionHelper {
         }
 
         try {
-            return DriverManager.getConnection(instance.url);
+            return DriverManager.getConnection(instance.URL);
         } catch (SQLException ex) {
             System.out.println("Exception thrown! Could not connect to database...");
             throw ex;
