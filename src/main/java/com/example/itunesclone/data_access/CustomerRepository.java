@@ -17,8 +17,8 @@ public class CustomerRepository {
 
         try {
             conn = ConnectionHelper.getConnection();
-            Statement s = conn.createStatement();
-            ResultSet rs = s.executeQuery(sql);
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 customers.add(
                         new Customer(rs.getString(1), rs.getString(2),
@@ -37,10 +37,11 @@ public class CustomerRepository {
         return customers;
     }
 
+    /*TODO: validera genom att kolla ifall befintlig kund redan finns via email*/
     public Boolean addNewCustomer(Customer customer){
         Boolean addedCustomer = false;
-        String sql = "INSERT INTO customer(FirstName, LastName, Country, PostalCode, PhoneNumber, Email)" +
-                "VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO customer(FirstName, LastName, Country, PostalCode, PhoneNumber, Email, SupportRepId)" +
+                "VALUES(?,?,?,?,?,?,?)";
         try {
             conn = ConnectionHelper.getConnection();
             PreparedStatement prep =
@@ -52,6 +53,7 @@ public class CustomerRepository {
             prep.setString(4, customer.getPostalCode());
             prep.setString(5, customer.getPhoneNumber());
             prep.setString(6, customer.getEmail());
+            prep.setInt(7, customer.generateSupportRepId());
 
             int result = prep.executeUpdate();
             addedCustomer = (result != 0);
@@ -63,4 +65,5 @@ public class CustomerRepository {
         }
         return addedCustomer;
     }
+
 }

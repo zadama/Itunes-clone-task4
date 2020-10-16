@@ -1,4 +1,5 @@
 package com.example.itunesclone.models;
+import java.util.Random;
 
 public class Customer {
     private String customerId;
@@ -19,6 +20,12 @@ public class Customer {
         this.email = email;
     }
 
+    /*Kanske flytta till egen klass Employee*/
+    public int generateSupportRepId(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(5 - 3) + 3;
+            return randomNumber;
+        }
 
     public String getCustomerId() {
         return customerId;
