@@ -6,7 +6,7 @@ h2{
 .container{
     display: flex;
     flex-flow: row wrap;
-
+    align-items: flex-start;
 }
 
 .col{
@@ -15,4 +15,5 @@ h2{
     padding: 10px;
     box-shadow: 5px 10px;
     margin: 5px;
+
 }
