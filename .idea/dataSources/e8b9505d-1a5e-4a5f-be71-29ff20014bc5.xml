@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Chinook_Sqlite.sqlite">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.19">
+    <root id="1">
+      <ServerVersion>3.31.1</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="main">
+      <Current>1</Current>
+    </schema>
+    <collation id="3" parent="1" name="BINARY"/>
+    <collation id="4" parent="1" name="NOCASE"/>
+    <collation id="5" parent="1" name="RTRIM"/>
+    <table id="6" parent="2" name="Album"/>
+    <table id="7" parent="2" name="Artist"/>
+    <table id="8" parent="2" name="Customer"/>
+    <table id="9" parent="2" name="Employee"/>
+    <table id="10" parent="2" name="Genre"/>
+    <table id="11" parent="2" name="Invoice"/>
+    <table id="12" parent="2" name="InvoiceLine"/>
+    <table id="13" parent="2" name="MediaType"/>
+    <table id="14" parent="2" name="Playlist"/>
+    <table id="15" parent="2" name="PlaylistTrack"/>
+    <table id="16" parent="2" name="Track"/>
+    <table id="17" parent="2" name="sqlite_master">
+      <System>1</System>
+    </table>
+    <column id="18" parent="6" name="AlbumId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="19" parent="6" name="Title">
+      <Position>2</Position>
+      <DataType>NVARCHAR(160)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="20" parent="6" name="ArtistId">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="21" parent="6" name="IPK_Album">
+      <ColNames>AlbumId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="22" parent="6" name="IFK_AlbumArtistId">
+      <ColNames>ArtistId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="23" parent="6" name="PK_Album">
+      <ColNames>AlbumId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Album</UnderlyingIndexName>
+    </key>
+    <foreign-key id="24" parent="6">
+      <ColNames>ArtistId</ColNames>
+      <RefTableName>Artist</RefTableName>
+      <RefKeyName>PK_Artist</RefKeyName>
+      <RefColNames>ArtistId</RefColNames>
+    </foreign-key>
+    <column id="25" parent="7" name="ArtistId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="7" name="Name">
+      <Position>2</Position>
+      <DataType>NVARCHAR(120)|0s</DataType>
+    </column>
+    <index id="27" parent="7" name="IPK_Artist">
+      <ColNames>ArtistId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="28" parent="7" name="PK_Artist">
+      <ColNames>ArtistId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Artist</UnderlyingIndexName>
+    </key>
+    <column id="29" parent="8" name="CustomerId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="30" parent="8" name="FirstName">
+      <Position>2</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="31" parent="8" name="LastName">
+      <Position>3</Position>
+      <DataType>NVARCHAR(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="32" parent="8" name="Company">
+      <Position>4</Position>
+      <DataType>NVARCHAR(80)|0s</DataType>
+    </column>
+    <column id="33" parent="8" name="Address">
+      <Position>5</Position>
+      <DataType>NVARCHAR(70)|0s</DataType>
+    </column>
+    <column id="34" parent="8" name="City">
+      <Position>6</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="35" parent="8" name="State">
+      <Position>7</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="36" parent="8" name="Country">
+      <Position>8</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="37" parent="8" name="PostalCode">
+      <Position>9</Position>
+      <DataType>NVARCHAR(10)|0s</DataType>
+    </column>
+    <column id="38" parent="8" name="Phone">
+      <Position>10</Position>
+      <DataType>NVARCHAR(24)|0s</DataType>
+    </column>
+    <column id="39" parent="8" name="Fax">
+      <Position>11</Position>
+      <DataType>NVARCHAR(24)|0s</DataType>
+    </column>
+    <column id="40" parent="8" name="Email">
+      <Position>12</Position>
+      <DataType>NVARCHAR(60)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="8" name="SupportRepId">
+      <Position>13</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <index id="42" parent="8" name="IPK_Customer">
+      <ColNames>CustomerId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="43" parent="8" name="IFK_CustomerSupportRepId">
+      <ColNames>SupportRepId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="44" parent="8" name="PK_Customer">
+      <ColNames>CustomerId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Customer</UnderlyingIndexName>
+    </key>
+    <foreign-key id="45" parent="8">
+      <ColNames>SupportRepId</ColNames>
+      <RefTableName>Employee</RefTableName>
+      <RefKeyName>PK_Employee</RefKeyName>
+      <RefColNames>EmployeeId</RefColNames>
+    </foreign-key>
+    <column id="46" parent="9" name="EmployeeId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="9" name="LastName">
+      <Position>2</Position>
+      <DataType>NVARCHAR(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="9" name="FirstName">
+      <Position>3</Position>
+      <DataType>NVARCHAR(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="49" parent="9" name="Title">
+      <Position>4</Position>
+      <DataType>NVARCHAR(30)|0s</DataType>
+    </column>
+    <column id="50" parent="9" name="ReportsTo">
+      <Position>5</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="51" parent="9" name="BirthDate">
+      <Position>6</Position>
+      <DataType>DATETIME|0s</DataType>
+    </column>
+    <column id="52" parent="9" name="HireDate">
+      <Position>7</Position>
+      <DataType>DATETIME|0s</DataType>
+    </column>
+    <column id="53" parent="9" name="Address">
+      <Position>8</Position>
+      <DataType>NVARCHAR(70)|0s</DataType>
+    </column>
+    <column id="54" parent="9" name="City">
+      <Position>9</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="55" parent="9" name="State">
+      <Position>10</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="56" parent="9" name="Country">
+      <Position>11</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="57" parent="9" name="PostalCode">
+      <Position>12</Position>
+      <DataType>NVARCHAR(10)|0s</DataType>
+    </column>
+    <column id="58" parent="9" name="Phone">
+      <Position>13</Position>
+      <DataType>NVARCHAR(24)|0s</DataType>
+    </column>
+    <column id="59" parent="9" name="Fax">
+      <Position>14</Position>
+      <DataType>NVARCHAR(24)|0s</DataType>
+    </column>
+    <column id="60" parent="9" name="Email">
+      <Position>15</Position>
+      <DataType>NVARCHAR(60)|0s</DataType>
+    </column>
+    <index id="61" parent="9" name="IPK_Employee">
+      <ColNames>EmployeeId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="62" parent="9" name="IFK_EmployeeReportsTo">
+      <ColNames>ReportsTo</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="63" parent="9" name="PK_Employee">
+      <ColNames>EmployeeId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Employee</UnderlyingIndexName>
+    </key>
+    <foreign-key id="64" parent="9">
+      <ColNames>ReportsTo</ColNames>
+      <RefTableName>Employee</RefTableName>
+      <RefKeyName>PK_Employee</RefKeyName>
+      <RefColNames>EmployeeId</RefColNames>
+    </foreign-key>
+    <column id="65" parent="10" name="GenreId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="66" parent="10" name="Name">
+      <Position>2</Position>
+      <DataType>NVARCHAR(120)|0s</DataType>
+    </column>
+    <index id="67" parent="10" name="IPK_Genre">
+      <ColNames>GenreId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="68" parent="10" name="PK_Genre">
+      <ColNames>GenreId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Genre</UnderlyingIndexName>
+    </key>
+    <column id="69" parent="11" name="InvoiceId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="11" name="CustomerId">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="71" parent="11" name="InvoiceDate">
+      <Position>3</Position>
+      <DataType>DATETIME|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="72" parent="11" name="BillingAddress">
+      <Position>4</Position>
+      <DataType>NVARCHAR(70)|0s</DataType>
+    </column>
+    <column id="73" parent="11" name="BillingCity">
+      <Position>5</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="74" parent="11" name="BillingState">
+      <Position>6</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="75" parent="11" name="BillingCountry">
+      <Position>7</Position>
+      <DataType>NVARCHAR(40)|0s</DataType>
+    </column>
+    <column id="76" parent="11" name="BillingPostalCode">
+      <Position>8</Position>
+      <DataType>NVARCHAR(10)|0s</DataType>
+    </column>
+    <column id="77" parent="11" name="Total">
+      <Position>9</Position>
+      <DataType>NUMERIC(10,2 digit)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="78" parent="11" name="IPK_Invoice">
+      <ColNames>InvoiceId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="79" parent="11" name="IFK_InvoiceCustomerId">
+      <ColNames>CustomerId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="80" parent="11" name="PK_Invoice">
+      <ColNames>InvoiceId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Invoice</UnderlyingIndexName>
+    </key>
+    <foreign-key id="81" parent="11">
+      <ColNames>CustomerId</ColNames>
+      <RefTableName>Customer</RefTableName>
+      <RefKeyName>PK_Customer</RefKeyName>
+      <RefColNames>CustomerId</RefColNames>
+    </foreign-key>
+    <column id="82" parent="12" name="InvoiceLineId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="83" parent="12" name="InvoiceId">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="84" parent="12" name="TrackId">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="85" parent="12" name="UnitPrice">
+      <Position>4</Position>
+      <DataType>NUMERIC(10,2 digit)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="86" parent="12" name="Quantity">
+      <Position>5</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="87" parent="12" name="IPK_InvoiceLine">
+      <ColNames>InvoiceLineId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="88" parent="12" name="IFK_InvoiceLineInvoiceId">
+      <ColNames>InvoiceId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <index id="89" parent="12" name="IFK_InvoiceLineTrackId">
+      <ColNames>TrackId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="90" parent="12" name="PK_InvoiceLine">
+      <ColNames>InvoiceLineId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_InvoiceLine</UnderlyingIndexName>
+    </key>
+    <foreign-key id="91" parent="12">
+      <ColNames>InvoiceId</ColNames>
+      <RefTableName>Invoice</RefTableName>
+      <RefKeyName>PK_Invoice</RefKeyName>
+      <RefColNames>InvoiceId</RefColNames>
+    </foreign-key>
+    <foreign-key id="92" parent="12">
+      <ColNames>TrackId</ColNames>
+      <RefTableName>Track</RefTableName>
+      <RefKeyName>PK_Track</RefKeyName>
+      <RefColNames>TrackId</RefColNames>
+    </foreign-key>
+    <column id="93" parent="13" name="MediaTypeId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="94" parent="13" name="Name">
+      <Position>2</Position>
+      <DataType>NVARCHAR(120)|0s</DataType>
+    </column>
+    <index id="95" parent="13" name="IPK_MediaType">
+      <ColNames>MediaTypeId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="96" parent="13" name="PK_MediaType">
+      <ColNames>MediaTypeId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_MediaType</UnderlyingIndexName>
+    </key>
+    <column id="97" parent="14" name="PlaylistId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="98" parent="14" name="Name">
+      <Position>2</Position>
+      <DataType>NVARCHAR(120)|0s</DataType>
+    </column>
+    <index id="99" parent="14" name="IPK_Playlist">
+      <ColNames>PlaylistId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="100" parent="14" name="PK_Playlist">
+      <ColNames>PlaylistId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Playlist</UnderlyingIndexName>
+    </key>
+    <column id="101" parent="15" name="PlaylistId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="102" parent="15" name="TrackId">
+      <Position>2</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="103" parent="15" name="IPK_PlaylistTrack">
+      <ColNames>PlaylistId
+TrackId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="104" parent="15" name="sqlite_autoindex_PlaylistTrack_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>PlaylistId
+TrackId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="105" parent="15" name="IFK_PlaylistTrackTrackId">
+      <ColNames>TrackId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="106" parent="15" name="PK_PlaylistTrack">
+      <ColNames>PlaylistId
+TrackId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_PlaylistTrack_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="107" parent="15">
+      <ColNames>PlaylistId</ColNames>
+      <RefTableName>Playlist</RefTableName>
+      <RefKeyName>PK_Playlist</RefKeyName>
+      <RefColNames>PlaylistId</RefColNames>
+    </foreign-key>
+    <foreign-key id="108" parent="15">
+      <ColNames>TrackId</ColNames>
+      <RefTableName>Track</RefTableName>
+      <RefKeyName>PK_Track</RefKeyName>
+      <RefColNames>TrackId</RefColNames>
+    </foreign-key>
+    <column id="109" parent="16" name="TrackId">
+      <Position>1</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="110" parent="16" name="Name">
+      <Position>2</Position>
+      <DataType>NVARCHAR(200)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="16" name="AlbumId">
+      <Position>3</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="112" parent="16" name="MediaTypeId">
+      <Position>4</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="113" parent="16" name="GenreId">
+      <Position>5</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="114" parent="16" name="Composer">
+      <Position>6</Position>
+      <DataType>NVARCHAR(220)|0s</DataType>
+    </column>
+    <column id="115" parent="16" name="Milliseconds">
+      <Position>7</Position>
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="116" parent="16" name="Bytes">
+      <Position>8</Position>
+      <DataType>INTEGER|0s</DataType>
+    </column>
+    <column id="117" parent="16" name="UnitPrice">
+      <Position>9</Position>
+      <DataType>NUMERIC(10,2 digit)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="118" parent="16" name="IPK_Track">
+      <ColNames>TrackId</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="119" parent="16" name="IFK_TrackAlbumId">
+      <ColNames>AlbumId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <index id="120" parent="16" name="IFK_TrackMediaTypeId">
+      <ColNames>MediaTypeId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <index id="121" parent="16" name="IFK_TrackGenreId">
+      <ColNames>GenreId</ColNames>
+      <ColumnCollations></ColumnCollations>
+    </index>
+    <key id="122" parent="16" name="PK_Track">
+      <ColNames>TrackId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>IPK_Track</UnderlyingIndexName>
+    </key>
+    <foreign-key id="123" parent="16">
+      <ColNames>AlbumId</ColNames>
+      <RefTableName>Album</RefTableName>
+      <RefKeyName>PK_Album</RefKeyName>
+      <RefColNames>AlbumId</RefColNames>
+    </foreign-key>
+    <foreign-key id="124" parent="16">
+      <ColNames>MediaTypeId</ColNames>
+      <RefTableName>MediaType</RefTableName>
+      <RefKeyName>PK_MediaType</RefKeyName>
+      <RefColNames>MediaTypeId</RefColNames>
+    </foreign-key>
+    <foreign-key id="125" parent="16">
+      <ColNames>GenreId</ColNames>
+      <RefTableName>Genre</RefTableName>
+      <RefKeyName>PK_Genre</RefKeyName>
+      <RefColNames>GenreId</RefColNames>
+    </foreign-key>
+    <column id="126" parent="17" name="type">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="127" parent="17" name="name">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="128" parent="17" name="tbl_name">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="129" parent="17" name="rootpage">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="130" parent="17" name="sql">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+  </database-model>
+</dataSource>

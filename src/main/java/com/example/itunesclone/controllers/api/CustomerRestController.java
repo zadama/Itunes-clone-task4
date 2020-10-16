@@ -21,4 +21,9 @@ public class CustomerRestController {
         return new ResponseEntity<>(CustomerRepository.getAllCustomers(),
                 HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/customers", method = RequestMethod.POST)
+    public HttpStatus addCustomer(){
+        return HttpStatus.OK;
+    }
 }
