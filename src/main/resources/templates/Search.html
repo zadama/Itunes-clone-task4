@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset = "ISO-8859-1" />
+    <title>Spring Boot Application</title>
+    <link th:href="@{/index.css}" rel="stylesheet" />
+</head>
+<body>
+
+<h2 th:text="'Hello, ' + ${name} + '!'" />
+
+<div>
+    <div class="container" >
+
+        <div th:each="emp : ${message}" class="col">
+            <h1 th:text="|${emp.id}. ${emp.firstName} ${emp.lastName}|"/>
+            <p th:text="${emp.country}" />
+            <p th:text="${emp.postalCode}" />
+            <p th:text="${emp.phoneNbr}" />
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

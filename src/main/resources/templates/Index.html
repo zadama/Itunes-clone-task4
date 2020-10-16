@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1"/>
+    <title>Spring Boot Application</title>
+    <link th:href="@{/index.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<h1>Input here...</h1>
+
+<div>
+    <h2>Artists</h2>
+
+    <div class="container">
+
+        <div th:each="artist : ${artists}" class="col">
+            <h1 th:text="|${artist.getId()} - ${artist.getName()} |"/>
+        </div>
+
+    </div>
+    <br>
+
+    <h2>Tracks</h2>
+    <div class="container">
+        <div th:each="track : ${tracks}" class="col">
+            <h1 th:text="|${track.getId()}. ${track.getName()}|"/>
+            <p th:text="${track.getComposer()}"/>
+
+        </div>
+
+    </div>
+ <br>
+    <h2>Genres</h2>
+
+    <div class="container">
+
+        <div th:each="genre : ${genres}" class="col">
+            <h1 th:text="|${genre.getId()}. ${genre.getName()} |"/>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
