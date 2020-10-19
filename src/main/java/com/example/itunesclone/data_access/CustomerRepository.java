@@ -2,6 +2,7 @@ package com.example.itunesclone.data_access;
 
 import com.example.itunesclone.models.CountCustomerInCountry;
 import com.example.itunesclone.models.Customer;
+import com.example.itunesclone.models.SpendingCustomer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -118,6 +119,43 @@ public class CustomerRepository {
             ConnectionHelper.close(conn);
         }
         return customersByCountry;
+    }
+
+    public ArrayList<SpendingCustomer> getCustomerBySpentAmount() {
+
+        var spendingCustomer = new ArrayList<SpendingCustomer>();
+        String sql = "SELECT c.CustomerId, c.FirstName," +
+                "       c.LastName,c.Country, " +
+                "       c.PostalCode,c.PhoneNumber," +
+                "       c.Email,round( SUM(I.Total), 2) as total from Customer c" +
+                "                                 JOIN Invoice I on c.CustomerId = I.CustomerId" +
+                "       GROUP BY c.customerId" +
+                "       ORDER BY total DESC";
+
+        try {
+            conn = ConnectionHelper.getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                spendingCustomer.add(new SpendingCustomer(
+                                rs.getInt(1),
+                                rs.getString(2),
+                                rs.getString(3),
+                                rs.getString(4),
+                                rs.getString(5),
+                                rs.getString(6),
+                                rs.getString(7),
+                                rs.getDouble(8)));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            ConnectionHelper.close(conn);
+        }
+        return spendingCustomer;
+
     }
 
 }

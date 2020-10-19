@@ -3,6 +3,7 @@ package com.example.itunesclone.controllers.api;
 import com.example.itunesclone.data_access.CustomerRepository;
 import com.example.itunesclone.models.CountCustomerInCountry;
 import com.example.itunesclone.models.Customer;
+import com.example.itunesclone.models.SpendingCustomer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,5 +39,10 @@ public class CustomerRestController {
     @RequestMapping(value = "/customers/countries/top", method = RequestMethod.GET)
     public ArrayList<CountCustomerInCountry> countCustomersByCountry(){
         return customerRepository.getCountOfCustomersByCountry();
+    }
+
+    @RequestMapping(value = "/customers/spendings/top", method = RequestMethod.GET)
+    public ArrayList<SpendingCustomer> customersBySpentAmount() {
+        return customerRepository.getCustomerBySpentAmount();
     }
 }
