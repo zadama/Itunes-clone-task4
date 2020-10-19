@@ -28,4 +28,9 @@ public class CustomerRestController {
     public Boolean addNewCustomer(@RequestBody Customer customer){
         return customerRepository.addNewCustomer(customer);
     }
+
+    @RequestMapping(value = "/customers", method = RequestMethod.PUT)
+    public Boolean updateCustomer(@RequestBody Customer customer){
+        return customerRepository.updateCustomer(customer);
+    }
 }

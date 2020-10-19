@@ -66,4 +66,36 @@ public class CustomerRepository {
         return addedCustomer;
     }
 
+    public Boolean updateCustomer(Customer customer){
+        Boolean updatedCustomer = false;
+        String sql = "UPDATE customer SET FirstName=?, LastName=?, Country=?, PostalCode=?, PhoneNumber=?, Email=? WHERE CustomerId=?";
+        try{
+            conn = ConnectionHelper.getConnection();
+            PreparedStatement prep =
+                    conn.prepareStatement(sql);
+            prep.setString(1,customer.getFirstName());
+            prep.setString(2,customer.getLastName());
+            prep.setString(3,customer.getCountry());
+            prep.setString(4,customer.getPostalCode());
+            prep.setString(5,customer.getPhoneNumber());
+            prep.setString(6, customer.getEmail());
+            prep.setString(7, customer.getCustomerId());
+
+            int result = prep.executeUpdate();
+            updatedCustomer = (result != 0); // if res = 1; true
+
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try{
+                conn.close();
+            } catch (Exception exception){
+                System.out.println(exception.toString());
+            }
+        }
+        return updatedCustomer;
+    }
+
 }
