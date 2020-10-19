@@ -1,6 +1,7 @@
 package com.example.itunesclone.controllers.api;
 
 import com.example.itunesclone.data_access.CustomerRepository;
+import com.example.itunesclone.models.CountCustomerInCountry;
 import com.example.itunesclone.models.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,10 @@ public class CustomerRestController {
     @RequestMapping(value = "/customers", method = RequestMethod.PUT)
     public Boolean updateCustomer(@RequestBody Customer customer){
         return customerRepository.updateCustomer(customer);
+    }
+
+    @RequestMapping(value = "/customers/countries/top", method = RequestMethod.GET)
+    public ArrayList<CountCustomerInCountry> countCustomersByCountry(){
+        return customerRepository.getCountOfCustomersByCountry();
     }
 }

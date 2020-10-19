@@ -1,5 +1,6 @@
 package com.example.itunesclone.data_access;
 
+import com.example.itunesclone.models.CountCustomerInCountry;
 import com.example.itunesclone.models.Customer;
 
 import java.sql.*;
@@ -38,7 +39,7 @@ public class CustomerRepository {
     }
 
     /*TODO: validera genom att kolla ifall befintlig kund redan finns via email*/
-    public Boolean addNewCustomer(Customer customer){
+    public Boolean addNewCustomer(Customer customer) {
         Boolean addedCustomer = false;
         String sql = "INSERT INTO customer(FirstName, LastName, Country, PostalCode, PhoneNumber, Email, SupportRepId)" +
                 "VALUES(?,?,?,?,?,?,?)";
@@ -57,7 +58,7 @@ public class CustomerRepository {
 
             int result = prep.executeUpdate();
             addedCustomer = (result != 0);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
 
         } finally {
@@ -66,18 +67,18 @@ public class CustomerRepository {
         return addedCustomer;
     }
 
-    public Boolean updateCustomer(Customer customer){
+    public Boolean updateCustomer(Customer customer) {
         Boolean updatedCustomer = false;
         String sql = "UPDATE customer SET FirstName=?, LastName=?, Country=?, PostalCode=?, PhoneNumber=?, Email=? WHERE CustomerId=?";
-        try{
+        try {
             conn = ConnectionHelper.getConnection();
             PreparedStatement prep =
                     conn.prepareStatement(sql);
-            prep.setString(1,customer.getFirstName());
-            prep.setString(2,customer.getLastName());
-            prep.setString(3,customer.getCountry());
-            prep.setString(4,customer.getPostalCode());
-            prep.setString(5,customer.getPhoneNumber());
+            prep.setString(1, customer.getFirstName());
+            prep.setString(2, customer.getLastName());
+            prep.setString(3, customer.getCountry());
+            prep.setString(4, customer.getPostalCode());
+            prep.setString(5, customer.getPhoneNumber());
             prep.setString(6, customer.getEmail());
             prep.setString(7, customer.getCustomerId());
 
@@ -85,17 +86,38 @@ public class CustomerRepository {
             updatedCustomer = (result != 0); // if res = 1; true
 
 
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            try{
+        } finally {
+            try {
                 conn.close();
-            } catch (Exception exception){
+            } catch (Exception exception) {
                 System.out.println(exception.toString());
             }
         }
         return updatedCustomer;
+    }
+
+    public ArrayList<CountCustomerInCountry> getCountOfCustomersByCountry() {
+        var customersByCountry = new ArrayList<CountCustomerInCountry>();
+
+        String sql = "SELECT Country, COUNT(*) as number_of_customers FROM Customer GROUP BY country ORDER BY number_of_customers DESC";
+
+        try {
+            conn = ConnectionHelper.getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                customersByCountry.add(new CountCustomerInCountry(rs.getString("Country"),rs.getString("number_of_customers")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            ConnectionHelper.close(conn);
+        }
+        return customersByCountry;
     }
 
 }

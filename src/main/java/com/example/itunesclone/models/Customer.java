@@ -20,7 +20,6 @@ public class Customer {
         this.email = email;
     }
 
-    /*Kanske flytta till egen klass Employee*/
     public int generateSupportRepId(){
         Random random = new Random();
         int randomNumber = random.nextInt(5 - 3) + 3;
