@@ -3,13 +3,11 @@ package com.example.itunesclone.controllers.api;
 import com.example.itunesclone.data_access.CustomerRepository;
 import com.example.itunesclone.models.CountCustomerInCountry;
 import com.example.itunesclone.models.Customer;
+import com.example.itunesclone.models.CustomerPopularGenre;
 import com.example.itunesclone.models.SpendingCustomer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -44,5 +42,10 @@ public class CustomerRestController {
     @RequestMapping(value = "/customers/spendings/top", method = RequestMethod.GET)
     public ArrayList<SpendingCustomer> customersBySpentAmount() {
         return customerRepository.getCustomerBySpentAmount();
+    }
+
+    @RequestMapping(value = "/customers/{customerId}/popular/genre", method = RequestMethod.GET)
+    public ArrayList<CustomerPopularGenre> popularGenres(@PathVariable String customerId) {
+        return customerRepository.getPopularGenre(customerId);
     }
 }

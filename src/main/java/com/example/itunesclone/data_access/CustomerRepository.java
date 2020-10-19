@@ -2,6 +2,7 @@ package com.example.itunesclone.data_access;
 
 import com.example.itunesclone.models.CountCustomerInCountry;
 import com.example.itunesclone.models.Customer;
+import com.example.itunesclone.models.CustomerPopularGenre;
 import com.example.itunesclone.models.SpendingCustomer;
 
 import java.sql.*;
@@ -109,7 +110,7 @@ public class CustomerRepository {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                customersByCountry.add(new CountCustomerInCountry(rs.getString("Country"),rs.getString("number_of_customers")));
+                customersByCountry.add(new CountCustomerInCountry(rs.getString("Country"), rs.getString("number_of_customers")));
             }
 
         } catch (SQLException e) {
@@ -138,14 +139,14 @@ public class CustomerRepository {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 spendingCustomer.add(new SpendingCustomer(
-                                rs.getInt(1),
-                                rs.getString(2),
-                                rs.getString(3),
-                                rs.getString(4),
-                                rs.getString(5),
-                                rs.getString(6),
-                                rs.getString(7),
-                                rs.getDouble(8)));
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getDouble(8)));
             }
 
         } catch (SQLException e) {
@@ -156,6 +157,66 @@ public class CustomerRepository {
         }
         return spendingCustomer;
 
+    }
+
+    public ArrayList<CustomerPopularGenre> getPopularGenre(String customerId) {
+
+        var popularGenre = new ArrayList<CustomerPopularGenre>();
+        String sql = "SELECT Customer.CustomerId, Customer.FirstName, Customer.LastName, Genre.Name, Count(Track.GenreId) total" +
+                " from Customer" +
+                "         JOIN Invoice on Customer.CustomerId = Invoice.CustomerId" +
+                "         JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId" +
+                "         JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
+                "         JOIN Genre ON Track.GenreId = Genre.GenreId" +
+                " WHERE Customer.CustomerId=?" +
+                " GROUP BY Genre.GenreId" +
+                " ORDER BY total DESC";
+
+        try {
+            conn = ConnectionHelper.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,customerId);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                popularGenre.add(new CustomerPopularGenre(rs.getString("FirstName"), rs.getString("LastName"), rs.getString("Name"), rs.getInt("total")));
+            }
+
+            popularGenre = filterPopularGenres(popularGenre);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            ConnectionHelper.close(conn);
+        }
+        return popularGenre;
+    }
+
+    private ArrayList<CustomerPopularGenre> filterPopularGenres(ArrayList<CustomerPopularGenre> popularGenre) {
+        ArrayList<CustomerPopularGenre> filteredList = new ArrayList<CustomerPopularGenre>();
+
+        int maxValue = Integer.MIN_VALUE;
+
+        for (CustomerPopularGenre c : popularGenre) {
+            if (c.getTotal() >= maxValue) {
+                maxValue = c.getTotal();
+            }
+        }
+
+        for (CustomerPopularGenre c : popularGenre) {
+            if (c.getTotal() == maxValue) {
+              if(filteredList.size()>0){
+                  CustomerPopularGenre customerPopularGenre = filteredList.get(0);
+                    customerPopularGenre.setGenreName(customerPopularGenre.getGenreName() + ", " + c.getGenreName());
+              } else{
+                  filteredList.add(c);
+              }
+            }
+        }
+
+        return filteredList;
     }
 
 }
