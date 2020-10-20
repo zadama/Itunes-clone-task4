@@ -1,6 +1,6 @@
 package com.example.itunesclone.models;
 
-public class SpendingCustomer {
+public class BuyingCustomer {
 
     private int customerId;
     private String firstName;
@@ -11,7 +11,7 @@ public class SpendingCustomer {
     private String email;
     private double totalAmount;
 
-    public SpendingCustomer(int customerId, String firstName, String lastName, String country, String postalCode, String phoneNumber, String email, double totalAmount) {
+    public BuyingCustomer(int customerId, String firstName, String lastName, String country, String postalCode, String phoneNumber, String email, double totalAmount) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;

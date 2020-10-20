@@ -8,20 +8,22 @@ public class ConnectionHelper {
 
     /*Setting up a connection object*/
     private String URL;
-    private static ConnectionHelper instance;
+    private static ConnectionHelper connectionHelper;
 
+    /*Singleton pattern with private constructor*/
     private ConnectionHelper() {
         URL = "jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
     }
 
+    /*Static method that returns a connection based on the URL*/
     public static Connection getConnection() throws SQLException {
 
-        if (instance == null) {
-            instance = new ConnectionHelper();
+        if (connectionHelper == null) {
+            connectionHelper = new ConnectionHelper();
         }
 
         try {
-            return DriverManager.getConnection(instance.URL);
+            return DriverManager.getConnection(connectionHelper.URL);
         } catch (SQLException ex) {
             System.out.println("Exception thrown! Could not connect to database...");
             throw ex;

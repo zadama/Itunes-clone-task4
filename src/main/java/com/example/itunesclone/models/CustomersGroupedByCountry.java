@@ -1,6 +1,6 @@
 package com.example.itunesclone.models;
 
-public class CountCustomerInCountry {
+public class CustomersGroupedByCountry {
     private String country;
 
     public String getCountry() {
@@ -22,7 +22,7 @@ public class CountCustomerInCountry {
     private String number_of_customers;
 
 
-    public CountCustomerInCountry(String country, String number_of_customers) {
+    public CustomersGroupedByCountry(String country, String number_of_customers) {
         this.country = country;
         this.number_of_customers = number_of_customers;
     }

@@ -1,15 +1,16 @@
 package com.example.itunesclone.data_access;
 
-import com.example.itunesclone.models.CountCustomerInCountry;
+import com.example.itunesclone.models.CustomersGroupedByCountry;
 import com.example.itunesclone.models.Customer;
-import com.example.itunesclone.models.CustomerPopularGenre;
-import com.example.itunesclone.models.SpendingCustomer;
+import com.example.itunesclone.models.GenreOfCustomer;
+import com.example.itunesclone.models.BuyingCustomer;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerRepository {
-    /*Set up a connection object - skapade klassvariabel pga flera metoder*/
+
+    /*Set up a connection object as class property that all methods use*/
     private Connection conn = null;
 
     public ArrayList<Customer> getAllCustomers() {
@@ -21,16 +22,17 @@ public class CustomerRepository {
         try {
             conn = ConnectionHelper.getConnection();
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
                 customers.add(
-                        new Customer(rs.getString(1), rs.getString(2),
-                                rs.getString(3),
-                                rs.getString(8), rs.getString(9),
-                                rs.getString(10), rs.getString(12)));
-
+                        new Customer(resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(8),
+                                resultSet.getString(9),
+                                resultSet.getString(10),
+                                resultSet.getString(12)));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -40,15 +42,22 @@ public class CustomerRepository {
         return customers;
     }
 
-    /*TODO: validera genom att kolla ifall befintlig kund redan finns via email*/
+    /*Tries to add customer to database, if succeeded the method returns boolean = true,
+    * otherwise returns false*/
     public Boolean addNewCustomer(Customer customer) {
         Boolean addedCustomer = false;
-        String sql = "INSERT INTO customer(FirstName, LastName, Country, PostalCode, PhoneNumber, Email, SupportRepId)" +
+        String sql = "INSERT INTO customer(" +
+                "FirstName, " +
+                "LastName, " +
+                "Country, " +
+                "PostalCode, " +
+                "PhoneNumber, " +
+                "Email, " +
+                "SupportRepId)" +
                 "VALUES(?,?,?,?,?,?,?)";
         try {
             conn = ConnectionHelper.getConnection();
-            PreparedStatement prep =
-                    conn.prepareStatement(sql);
+            PreparedStatement prep = conn.prepareStatement(sql);
 
             prep.setString(1, customer.getFirstName());
             prep.setString(2, customer.getLastName());
@@ -70,9 +79,18 @@ public class CustomerRepository {
         return addedCustomer;
     }
 
+    /*Updating the customer object by customerId,
+    if succeeded returns boolean = true, otherwise false is returned*/
     public Boolean updateCustomer(Customer customer) {
         Boolean updatedCustomer = false;
-        String sql = "UPDATE customer SET FirstName=?, LastName=?, Country=?, PostalCode=?, PhoneNumber=?, Email=? WHERE CustomerId=?";
+        String sql = "UPDATE customer SET " +
+                "FirstName=?, " +
+                "LastName=?, " +
+                "Country=?, " +
+                "PostalCode=?, " +
+                "PhoneNumber=?, " +
+                "Email=? " +
+                "WHERE CustomerId=?";
         try {
             conn = ConnectionHelper.getConnection();
             PreparedStatement prep =
@@ -86,8 +104,7 @@ public class CustomerRepository {
             prep.setString(7, customer.getCustomerId());
 
             int result = prep.executeUpdate();
-            updatedCustomer = (result != 0); // if res = 1; true
-
+            updatedCustomer = (result != 0);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,17 +118,23 @@ public class CustomerRepository {
         return updatedCustomer;
     }
 
-    public ArrayList<CountCustomerInCountry> getCountOfCustomersByCountry() {
-        var customersByCountry = new ArrayList<CountCustomerInCountry>();
+    /*Get all customers by country and count how many customers in each country*/
+    public ArrayList<CustomersGroupedByCountry> getCountOfCustomersByCountry() {
+        var customersByCountry = new ArrayList<CustomersGroupedByCountry>();
 
-        String sql = "SELECT Country, COUNT(*) as number_of_customers FROM Customer GROUP BY country ORDER BY number_of_customers DESC";
+        String sql = "SELECT Country, COUNT(*) as number_of_customers " +
+                "FROM Customer " +
+                "GROUP BY country " +
+                "ORDER BY number_of_customers DESC";
 
         try {
             conn = ConnectionHelper.getConnection();
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                customersByCountry.add(new CountCustomerInCountry(rs.getString("Country"), rs.getString("number_of_customers")));
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                customersByCountry.add(new CustomersGroupedByCountry(
+                        resultSet.getString("Country"),
+                        resultSet.getString("number_of_customers")));
             }
 
         } catch (SQLException e) {
@@ -123,31 +146,36 @@ public class CustomerRepository {
         return customersByCountry;
     }
 
-    public ArrayList<SpendingCustomer> getCustomerBySpentAmount() {
+    /*Get customers with spent amount, saved in a list*/
+    public ArrayList<BuyingCustomer> getCustomerBySpentAmount() {
 
-        var spendingCustomer = new ArrayList<SpendingCustomer>();
-        String sql = "SELECT c.CustomerId, c.FirstName," +
-                "       c.LastName,c.Country, " +
-                "       c.PostalCode,c.PhoneNumber," +
-                "       c.Email,round( SUM(I.Total), 2) as total from Customer c" +
-                "                                 JOIN Invoice I on c.CustomerId = I.CustomerId" +
-                "       GROUP BY c.customerId" +
-                "       ORDER BY total DESC";
+        var spendingCustomer = new ArrayList<BuyingCustomer>();
+        String sql = "SELECT " +
+                "c.CustomerId, " +
+                "c.FirstName," +
+                "c.LastName," +
+                "c.Country, " +
+                "c.PostalCode," +
+                "c.PhoneNumber," +
+                "c.Email,round( SUM(I.Total), 2) as total from Customer c" +
+                "JOIN Invoice I on c.CustomerId = I.CustomerId" +
+                "GROUP BY c.customerId" +
+                "ORDER BY total DESC";
 
         try {
             conn = ConnectionHelper.getConnection();
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-                spendingCustomer.add(new SpendingCustomer(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getDouble(8)));
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                spendingCustomer.add(new BuyingCustomer(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getDouble(8)));
             }
 
         } catch (SQLException e) {
@@ -160,31 +188,41 @@ public class CustomerRepository {
 
     }
 
-    public ArrayList<CustomerPopularGenre> getPopularGenre(String customerId) {
+    /*With given customerId, a list of genres ordered by amount of tracks per genre.
+    * Then filtered to retun the most popular genre of a customer, if tied return all tied*/
+    public ArrayList<GenreOfCustomer> getPopularGenreOfCustomer(String customerId) {
 
-        var popularGenre = new ArrayList<CustomerPopularGenre>();
-        String sql = "SELECT Customer.CustomerId, Customer.FirstName, Customer.LastName, Genre.Name, Count(Track.GenreId) total" +
-                " from Customer" +
-                "         JOIN Invoice on Customer.CustomerId = Invoice.CustomerId" +
-                "         JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId" +
-                "         JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
-                "         JOIN Genre ON Track.GenreId = Genre.GenreId" +
-                " WHERE Customer.CustomerId=?" +
-                " GROUP BY Genre.GenreId" +
-                " ORDER BY total DESC";
+        var genres = new ArrayList<GenreOfCustomer>();
+        String sql = "SELECT " +
+                "Customer.CustomerId, " +
+                "Customer.FirstName, " +
+                "Customer.LastName, " +
+                "Genre.Name, " +
+                "Count(Track.GenreId) total " +
+                "FROM Customer" +
+                "JOIN Invoice on Customer.CustomerId = Invoice.CustomerId" +
+                "JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId" +
+                "JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
+                "JOIN Genre ON Track.GenreId = Genre.GenreId" +
+                "WHERE Customer.CustomerId=?" +
+                "GROUP BY Genre.GenreId" +
+                "ORDER BY total DESC";
 
         try {
             conn = ConnectionHelper.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,customerId);
+            statement.setString(1, customerId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                popularGenre.add(new CustomerPopularGenre(rs.getString("FirstName"), rs.getString("LastName"), rs.getString("Name"), rs.getInt("total")));
+                genres.add(new GenreOfCustomer(
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Name"),
+                        rs.getInt("total")));
             }
 
-            popularGenre = filterPopularGenres(popularGenre);
-
+            genres = filterByMostPopularGenre(genres);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -192,47 +230,48 @@ public class CustomerRepository {
         } finally {
             ConnectionHelper.close(conn);
         }
-        return popularGenre;
+        return genres;
     }
 
-    private ArrayList<CustomerPopularGenre> filterPopularGenres(ArrayList<CustomerPopularGenre> popularGenre) {
-        ArrayList<CustomerPopularGenre> filteredList = new ArrayList<CustomerPopularGenre>();
+    /*Filter the list of a customers' genres by the most popular*/
+    private ArrayList<GenreOfCustomer> filterByMostPopularGenre(ArrayList<GenreOfCustomer> popularGenre) {
+        ArrayList<GenreOfCustomer> mostPopularGenres = new ArrayList<GenreOfCustomer>();
 
         int maxValue = Integer.MIN_VALUE;
 
-        for (CustomerPopularGenre c : popularGenre) {
+        for (GenreOfCustomer c : popularGenre) {
             if (c.getTotal() >= maxValue) {
                 maxValue = c.getTotal();
             }
         }
 
-        for (CustomerPopularGenre c : popularGenre) {
+        for (GenreOfCustomer c : popularGenre) {
             if (c.getTotal() == maxValue) {
-              if(filteredList.size()>0){
-                  CustomerPopularGenre customerPopularGenre = filteredList.get(0);
-                    customerPopularGenre.setGenreName(customerPopularGenre.getGenreName() + ", " + c.getGenreName());
-              } else{
-                  filteredList.add(c);
-              }
+                if (mostPopularGenres.size() > 0) {
+                    GenreOfCustomer genreOfCustomer = mostPopularGenres.get(0);
+                    genreOfCustomer.setGenreName(genreOfCustomer.getGenreName() + ", " + c.getGenreName());
+                } else {
+                    mostPopularGenres.add(c);
+                }
             }
         }
 
-        return filteredList;
+        return mostPopularGenres;
     }
 
-    public boolean customerExists(String customerId){
+    public boolean checkIfCustomerExists(String customerId) {
 
         String sql = "SELECT FirstName FROM Customer WHERE CustomerId=?";
-        boolean isAvailable = false;
+        boolean existingCustomer = false;
         try {
             conn = ConnectionHelper.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,customerId);
-            ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                isAvailable = true;
-            }else{
-                isAvailable = false;
+            statement.setString(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                existingCustomer = true;
+            } else {
+                existingCustomer = false;
             }
 
         } catch (SQLException e) {
@@ -241,7 +280,7 @@ public class CustomerRepository {
         } finally {
             ConnectionHelper.close(conn);
         }
-        return isAvailable;
+        return existingCustomer;
 
     }
 

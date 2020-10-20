@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeViewController {
 
+    ArtistRepository artistRepository = new ArtistRepository();
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model){
 
-        model.addAttribute("artists", ArtistRepository.getRandomArtists(5));
+        model.addAttribute("artists", artistRepository.getRandomArtists(5));
         model.addAttribute("tracks", TrackRepository.getRandomTracks(5));
         model.addAttribute("genres", GenreRepository.getRandomGenres(5));
 
         model.addAttribute("search", new Search());
-        return "Index";
+        return "index";
     }
 }
