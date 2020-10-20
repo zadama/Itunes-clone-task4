@@ -14,73 +14,46 @@
 
 <body>
 
-<<<<<<< HEAD
-<div id = "searchBar">
-    <form action="#" th:action="@{/search}" th:object="${search}" method="get" id="form">
-        <input type="text" th:field="*{query}" id="" placeholder="Search for a song..."/>
-        <input type="submit" value="search" id="searchButton"/>
-    </form>
-</div>
-=======
-<h1 class="display-2"><p class="text-center">The Itune Clone</p></h1>
->>>>>>> search-styling
-
-    <div class="container h-100" id ="searchBar">
-        <div class="d-flex justify-content-center h-100">
-            <form action="#" th:action="@{/search}" th:object="${search}" method="get" id="form" >
-                <div class="searchbar">
-                    <input class="search_input" type="text" th:field="*{query}" id="" name="" placeholder="Search track...">
-                    <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-<div>
-<<<<<<< HEAD
-
-    <h2>Artists</h2>
-        <div class="container">
-            <div th:each="artist : ${artists}" class="col">
-                <h1 th:text="${artist.getName()}"/>
+    <h1 class="display-2"><p class="text-center">The Itune Clone</p></h1>
+        <div class="container searchBarContainer h-100" id ="searchBar">
+            <div class="d-flex justify-content-center h-100">
+                <form action="#" th:action="@{/search}" th:object="${search}" method="get" id="form" >
+                    <div class="searchbar">
+                        <input class="search_input" type="text" th:field="*{query}" id="" name="" placeholder="Search track...">
+                        <button type="submit" class="search_icon"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
+
+<div>
+
+    <h2 class="display-4">Artists</h2>
+        <div class="container">
+            <div th:each="artist : ${artists}" class="col">
+                <h2 th:text="${artist.getName()}"/>
+            </div>
+        </div>
+
     <br>
 
-
-    <h2>Tracks</h2>
+    <h2 class="display-4">Tracks</h2>
         <div class="container">
             <div th:each="track : ${tracks}" class="col">
-                <h1 th:text="${track.getName()}"/>
+                <h2 th:text="${track.getName()}"/>
                 <p th:text="${track.getComposer()}"/>
             </div>
         </div>
-=======
-    <h2>Artists</h2>
-    <div class="container">
-        <div th:each="artist : ${artists}" class="col">
-            <h1 th:text="|${artist.getId()} - ${artist.getName()} |"/>
-        </div>
-    </div>
 
     <br>
 
-    <h2>Tracks</h2>
-    <div class="container">
-        <div th:each="track : ${tracks}" class="col">
-            <h1 th:text="|${track.getId()}. ${track.getName()}|"/>
-            <p th:text="${track.getComposer()}"/>
-        </div>
-    </div>
->>>>>>> search-styling
-    <br>
-
-    <h2>Genres</h2>
+    <h2 class="display-4">Genres</h2>
         <div class="container">
             <div th:each="genre : ${genres}" class="col">
-                <h1 th:text="${genre.getName()}"/>
+                <h2 th:text="${genre.getName()}"/>
             </div>
         </div>
+
 </div>
 
 

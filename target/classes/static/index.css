@@ -6,15 +6,33 @@
     color: #6600ff;
 }
 
-h2{
+.display-4{
+    text-align: left;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    margin-left: 8%;
+    padding-top: 2%;
+    padding-bottom: 0.5%;
     color:#6600ff;
+
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+.searchBarContainer {
+    display: flex;
+    justify-content: center;
 }
 
 
 .container{
+    text-align: center;
+    margin: 15px;
     display: flex;
     flex-flow: row wrap;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .col{
@@ -23,6 +41,7 @@ h2{
     padding: 10px;
     box-shadow: 5px 10px;
     margin: 5px;
+    align-items: stretch;
 
 }
 
@@ -66,7 +85,7 @@ h2{
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color: white;
+    color: #6600ff;
     text-decoration: none;
 }
 
