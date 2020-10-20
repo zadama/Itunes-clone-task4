@@ -61,6 +61,7 @@ public class CustomerRepository {
             int result = prep.executeUpdate();
             addedCustomer = (result != 0);
         } catch (SQLException e) {
+            addedCustomer = false;
             e.printStackTrace();
 
         } finally {
@@ -217,6 +218,31 @@ public class CustomerRepository {
         }
 
         return filteredList;
+    }
+
+    public boolean customerExists(String customerId){
+
+        String sql = "SELECT FirstName FROM Customer WHERE CustomerId=?";
+        boolean isAvailable = false;
+        try {
+            conn = ConnectionHelper.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,customerId);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                isAvailable = true;
+            }else{
+                isAvailable = false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            ConnectionHelper.close(conn);
+        }
+        return isAvailable;
+
     }
 
 }
