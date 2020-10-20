@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SearchViewController {
+
+    /* When a search request is made at home page, the results are displayed at search page. */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String getSearch(Search search, Model model) {
-
-        // get the "song" search
-        // find the song from the database
-        // return search view and add the data to the model.
-       // model.addAttribute("search", new Search());
-
         model.addAttribute("query", search.getQuery());
         model.addAttribute("results", SearchRepository.getSearchedResult(search.getQuery()));
 

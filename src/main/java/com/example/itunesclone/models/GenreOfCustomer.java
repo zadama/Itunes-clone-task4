@@ -1,12 +1,12 @@
 package com.example.itunesclone.models;
 
-public class CustomerPopularGenre {
+public class GenreOfCustomer {
     private String firstName;
     private String lastName;
     private String genreName;
     private int total;
 
-    public CustomerPopularGenre(String firstName, String lastName, String genreName, int total) {
+    public GenreOfCustomer(String firstName, String lastName, String genreName, int total) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.genreName = genreName;
