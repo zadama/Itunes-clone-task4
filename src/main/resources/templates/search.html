@@ -5,37 +5,48 @@
 <head>
     <meta charset="ISO-8859-1"/>
     <title>Spring Boot Application</title>
-    <link th:href="@{/index.css}" rel="stylesheet"/>
+    <link th:href="@{/search.css}" rel="stylesheet"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
 </head>
 <body>
 
-<h1>SEARCH</h1>
+<h1 class="display-2"><p class ="text-center">Search The Itune Clone</p></h1>
 
-<p th:text="|You searched for: ${query}|"></p>
+<div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+        <div class="searchbar">
+            <input class="search_input" type="text" name="" placeholder="Search track...">
+            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        </div>
+    </div>
 
-
-<table>
-    <tr>
-        <th>Artist</th>
-        <th>Title</th>
-        <th>Album</th>
-        <th>Genre</th>
-    </tr>
-
-    <tr th:each="info: ${results}">
-
-        <td><label th:text="${info.getTrackName()}"></label></td>
-        <td><label th:text="${info.getArtistName()}"></label></td>
-        <td><label th:text="${info.getAlbumName()}"></label></td>
-        <td><label th:text="${info.getGenreName()}"></label></td>
-
-    </tr>
-
-</table>
+</div>
 
 
+
+<div class ="container">
+    <p th:text="|You searched for: ${query}|"></p>
+    <table>
+        <tr>
+            <th>Artist</th>
+            <th>Title</th>
+            <th>Album</th>
+            <th>Genre</th>
+        </tr>
+
+        <tr th:each="info: ${results}">
+
+            <td><label th:text="${info.getTrackName()}"></label></td>
+            <td><label th:text="${info.getArtistName()}"></label></td>
+            <td><label th:text="${info.getAlbumName()}"></label></td>
+            <td><label th:text="${info.getGenreName()}"></label></td>
+
+        </tr>
+    </table>
 </div>
 
 
