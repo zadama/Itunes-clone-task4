@@ -13,20 +13,21 @@ body, html {
     color: #6600ff;
 }
 
-.p {
-
+.display-5 {
+    font-size: 1.5em;
     text-align: center;
     color: #6600ff;
     padding-bottom: 0.5%;
 
 }
 
-.table {
+table {
+    border-collapse: collapse;
     margin: auto;
     width: 50% !important;
+    border: 2px solid #000000;
 }
-thead-dark {
-    color: #000000;
-}
+
+
 
 
