@@ -29,7 +29,8 @@
 
 
 <div class ="container">
-    <p th:text="|You searched for: ${query}|"></p>
+    <p th:text="|You searched for: |"></p>
+    <p th:text="${query != ''} ? ${query} : ''"></p>
     <table>
         <tr>
             <th>Artist</th>
