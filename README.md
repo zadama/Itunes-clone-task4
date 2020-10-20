@@ -2,7 +2,7 @@
 This is a working prototype with a simple UI built in Thymeleaf with the rest of the application being exposed as a regular REST API to be publicly consumed.
 The web application makes use of Spring Boot and Spring Initializr. 
 
-The app is hosted on Heroku at: https://task5-copyright-strike.herokuapp.com/
+The app is hosted on Heroku at: https://task5-copyright-strike.herokuapp.com/ and https://lillap-task5-copyright-strike.herokuapp.com/
 
 The request methods can be tested with Postman at: https://www.getpostman.com/collections/6b0c6848f4fcb869cf0f
 
