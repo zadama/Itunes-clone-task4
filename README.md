@@ -14,7 +14,10 @@ The app is hosted on Heroku at https://task5-copyright-strike.herokuapp.com/
 ### Example response
 
     Status: 200 OK
-   [ { "customerId": "1", "firstName": "Luís", "lastName": "Gonçalves", "country": "Brazil", "postalCode": "12227-000", "phoneNumber": "+55 (12) 3923-5555", "email": "luisg@embraer.com.br" }]
+    
+    ```json
+   [ { "customerId": "1", "firstName": "Luís", "lastName": "Gonçalves", "country": "Brazil", "postalCode": "12227-000", "phoneNumber": "+55 (12) 3923-5555", "email": "luisg@embraer.com.br" }] ```
+
 
 ## Create a new customer
 
@@ -41,8 +44,9 @@ The app is hosted on Heroku at https://task5-copyright-strike.herokuapp.com/
 ### Example response
 
     Status: 200 OK
-
-    [ { "country": "USA", "number_of_customers": "13" }]
+    
+    ```json
+    [ { "country": "USA", "number_of_customers": "13" }]``````
 
 
 ## Customers who are the highest spenders
@@ -52,8 +56,9 @@ The app is hosted on Heroku at https://task5-copyright-strike.herokuapp.com/
 ### Example response
 
     Status: 200 OK
-
-    [ { "customerId": 6, "firstName": "Helena", "lastName": "Holý", "country": "Czech Republic", "postalCode": "14300", "phoneNumber": "+420 2 4177 0449", "email": "hholy@gmail.com", "totalAmount": 49.62 }]
+    
+    ```json
+    [ { "customerId": 6, "firstName": "Helena", "lastName": "Holý", "country": "Czech Republic", "postalCode": "14300", "phoneNumber": "+420 2 4177 0449", "email": "hholy@gmail.com", "totalAmount": 49.62 }]```
 
 ## Get for a given customer, their most popular genre
 
@@ -62,8 +67,9 @@ The app is hosted on Heroku at https://task5-copyright-strike.herokuapp.com/
 ### Example response
 
     Status: 200 OK
-
-[ { "firstName": "Luís", "lastName": "Gonçalves", "genreName": "Rock", "total": 14 } ]
+    
+    ```json
+[ { "firstName": "Luís", "lastName": "Gonçalves", "genreName": "Rock", "total": 14 } ] ```
 
 
 ## Authors
