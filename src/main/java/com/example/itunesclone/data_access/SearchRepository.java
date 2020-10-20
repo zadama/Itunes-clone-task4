@@ -25,7 +25,7 @@ public class SearchRepository {
             con = ConnectionHelper.getConnection();
 
             PreparedStatement s = con.prepareStatement(sql);
-            s.setString(1, query);
+            s.setString(1,"%" + query + "%");
 
             ResultSet rs = s.executeQuery();
             while (rs.next()) {
