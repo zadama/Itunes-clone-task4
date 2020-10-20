@@ -20,6 +20,6 @@ public class HomeViewController {
         model.addAttribute("genres", GenreRepository.getRandomGenres(5));
 
         model.addAttribute("search", new Search());
-        return "index";
+        return "Index";
     }
 }
