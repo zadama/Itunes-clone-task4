@@ -14,10 +14,19 @@ body, html {
 }
 
 .p {
+<<<<<<< HEAD
 
     text-align: center;
     color: #6600ff;
     padding-bottom: 0.5%;
+=======
+    text-align: center;
+    font-family: "Arial Narrow";
+    font-weight: 400;
+    font-size: 2em;
+
+}
+>>>>>>> d62b0944b7d6cb594a6984f3374cdbe84d721d72
 
 }
 
