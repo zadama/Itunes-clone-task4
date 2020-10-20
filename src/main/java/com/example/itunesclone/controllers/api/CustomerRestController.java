@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RequestMapping("/api")
@@ -18,24 +19,37 @@ public class CustomerRestController {
 
     // om ej funkar, ta bort entity grejen helt o returnera listan bara
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCustomers(){
-
-        return new ResponseEntity<>(customerRepository.getAllCustomers(),
-                HttpStatus.OK);
+    public ArrayList<Customer> getAllCustomers() {
+        return customerRepository.getAllCustomers();
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
-    public Boolean addNewCustomer(@RequestBody Customer customer){
-        return customerRepository.addNewCustomer(customer);
+    public ResponseEntity addNewCustomer(@RequestBody Customer customer) {
+        if (customer.getEmail() == null || customer.getFirstName() == null) {
+
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        boolean isCreated = customerRepository.addNewCustomer(customer);
+
+        return isCreated ? new ResponseEntity(HttpStatus.CREATED) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.PUT)
-    public Boolean updateCustomer(@RequestBody Customer customer){
-        return customerRepository.updateCustomer(customer);
+    public ResponseEntity updateCustomer(@RequestBody Customer customer) {
+
+        if (!customerRepository.customerExists(customer.getCustomerId())) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        boolean isUpdated = customerRepository.updateCustomer(customer);
+
+        return isUpdated ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @RequestMapping(value = "/customers/countries/top", method = RequestMethod.GET)
-    public ArrayList<CountCustomerInCountry> countCustomersByCountry(){
+    public ArrayList<CountCustomerInCountry> countCustomersByCountry() {
         return customerRepository.getCountOfCustomersByCountry();
     }
 
@@ -45,7 +59,12 @@ public class CustomerRestController {
     }
 
     @RequestMapping(value = "/customers/{customerId}/popular/genre", method = RequestMethod.GET)
-    public ArrayList<CustomerPopularGenre> popularGenres(@PathVariable String customerId) {
-        return customerRepository.getPopularGenre(customerId);
+    public ResponseEntity<?> popularGenres(@PathVariable String customerId) {
+        ArrayList<CustomerPopularGenre> customerPopularGenres = customerRepository.getPopularGenre(customerId);
+
+        if (!customerRepository.customerExists(customerId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(customerPopularGenres,HttpStatus.OK);
     }
 }
