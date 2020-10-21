@@ -54,7 +54,7 @@ public class CustomerRepository {
                 "PhoneNumber, " +
                 "Email, " +
                 "SupportRepId)" +
-                "VALUES(?,?,?,?,?,?,?)";
+                " VALUES(?,?,?,?,?,?,?)";
         try {
             conn = ConnectionHelper.getConnection();
             PreparedStatement prep = conn.prepareStatement(sql);
@@ -84,12 +84,12 @@ public class CustomerRepository {
     public Boolean updateCustomer(Customer customer) {
         Boolean updatedCustomer = false;
         String sql = "UPDATE customer SET " +
-                "FirstName=?, " +
-                "LastName=?, " +
-                "Country=?, " +
-                "PostalCode=?, " +
-                "PhoneNumber=?, " +
-                "Email=? " +
+                " FirstName=?, " +
+                " LastName=?, " +
+                " Country=?, " +
+                " PostalCode=?, " +
+                " PhoneNumber=?, " +
+                " Email=? " +
                 "WHERE CustomerId=?";
         try {
             conn = ConnectionHelper.getConnection();
@@ -122,10 +122,10 @@ public class CustomerRepository {
     public ArrayList<CustomersGroupedByCountry> getCountOfCustomersByCountry() {
         var customersByCountry = new ArrayList<CustomersGroupedByCountry>();
 
-        String sql = "SELECT Country, COUNT(*) as number_of_customers " +
-                "FROM Customer " +
-                "GROUP BY country " +
-                "ORDER BY number_of_customers DESC";
+        String sql = "SELECT Country, COUNT(*) as number_of_customers" +
+                " FROM Customer " +
+                " GROUP BY country " +
+                " ORDER BY number_of_customers DESC";
 
         try {
             conn = ConnectionHelper.getConnection();
@@ -155,12 +155,12 @@ public class CustomerRepository {
                 "c.FirstName," +
                 "c.LastName," +
                 "c.Country, " +
-                "c.PostalCode," +
-                "c.PhoneNumber," +
+                "c.PostalCode, " +
+                "c.PhoneNumber, " +
                 "c.Email,round( SUM(I.Total), 2) as total from Customer c" +
-                "JOIN Invoice I on c.CustomerId = I.CustomerId" +
-                "GROUP BY c.customerId" +
-                "ORDER BY total DESC";
+                " JOIN Invoice I on c.CustomerId = I.CustomerId" +
+                " GROUP BY c.customerId" +
+                " ORDER BY total DESC";
 
         try {
             conn = ConnectionHelper.getConnection();
@@ -194,19 +194,19 @@ public class CustomerRepository {
 
         var genres = new ArrayList<GenreOfCustomer>();
         String sql = "SELECT " +
-                "Customer.CustomerId, " +
-                "Customer.FirstName, " +
-                "Customer.LastName, " +
-                "Genre.Name, " +
-                "Count(Track.GenreId) total " +
-                "FROM Customer" +
-                "JOIN Invoice on Customer.CustomerId = Invoice.CustomerId" +
-                "JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId" +
-                "JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
-                "JOIN Genre ON Track.GenreId = Genre.GenreId" +
-                "WHERE Customer.CustomerId=?" +
-                "GROUP BY Genre.GenreId" +
-                "ORDER BY total DESC";
+                " Customer.CustomerId, " +
+                " Customer.FirstName, " +
+                " Customer.LastName, " +
+                " Genre.Name, " +
+                " Count(Track.GenreId) total " +
+                " FROM Customer" +
+                " JOIN Invoice on Customer.CustomerId = Invoice.CustomerId" +
+                " JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId" +
+                " JOIN Track ON InvoiceLine.TrackId = Track.TrackId" +
+                " JOIN Genre ON Track.GenreId = Genre.GenreId" +
+                " WHERE Customer.CustomerId=?" +
+                " GROUP BY Genre.GenreId" +
+                " ORDER BY total DESC";
 
         try {
             conn = ConnectionHelper.getConnection();
