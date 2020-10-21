@@ -38,7 +38,7 @@ public class CustomerRestController {
     public ResponseEntity updateCustomer(@RequestBody Customer customer) {
 
         if (!customerRepository.checkIfCustomerExists(customer.getCustomerId())) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         boolean isUpdateSuccessful = customerRepository.updateCustomer(customer);
@@ -62,7 +62,7 @@ public class CustomerRestController {
         ArrayList<GenreOfCustomer> genreOfCustomers = customerRepository.getPopularGenreOfCustomer(customerId);
 
         if (!customerRepository.checkIfCustomerExists(customerId)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(genreOfCustomers, HttpStatus.OK);
     }
